@@ -1,23 +1,25 @@
 @extends('layouts.app')
 
 @section('content')
-
-<div class="container">
-	<div class="row">
-        <h5 class="card-title">検索フォーム</h5>
-           <div id="custom-search-input">
-            <div class="input-group col-md-12">
-                <form>
-                    <input type="text" class="  search-query form-control" placeholder="Search" />
-                    <span class="input-group-btn" style="position: relative; top: -37px; right: -173px;">
-                        <button class="btn btn-danger" type="button">
-                            <i class="fas fa-search"></i>
-                        </button>
-                    </span>
-                </form>
+<div class="card-body">
+    <div class="container">
+        <div class="row">
+            <h5 class="card-title">検索フォーム</h5>
+            <div id="custom-search-input">
+                <div class="input-group col-md-12">
+                    <form action="{{ route('posts.search') }}" method="POST">
+                        @csrf
+                        <input type="text" class="  search-query form-control" placeholder="Search" name="search">
+                        <span class="input-group-btn" style="position: relative; top: -37px; right: -173px;">
+                            <button class="btn btn-danger" type="submit">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </span>
+                    </form>
+                </div>
             </div>
         </div>
-	</div>
+    </div>
 </div>
 <div class="container">
     <div class="row justify-content-center">

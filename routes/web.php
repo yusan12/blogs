@@ -36,3 +36,5 @@ Route::post('posts/{post}/unfavorites', 'FavoriteController@destroy')->name('unf
 
 Route::get('login/twitter', 'Auth\LoginController@redirectToProvider')->name('login.twitter');
 Route::get('login/twitter/callback', 'Auth\LoginController@handleProviderCallback');
+
+Route::POST('/posts/search', 'PostController@search')->name('posts.search');
