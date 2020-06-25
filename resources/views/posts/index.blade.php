@@ -25,6 +25,11 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
               <h1>新着勉強なかま募集</h1>
+
+            @isset($search_result)
+                <h5 class="card_title">{{ $search_result }}</h5>
+            @endisset
+
               <a href="{{ route('posts.create') }}" class="btn btn-primary">新規投稿</a>
               <div class="card text-center">
                   <div class="card-header">
@@ -56,12 +61,17 @@
                     <div class="row justify-content-center">
                         <p>いいね数：{{ $post->users()->count() }}</p>
                     </div>
-                  </div>
-                  <div class="card-footer text-muted">
-                    投稿日:{{ $post->created_at }}
-                  </div>
-                  @endforeach
                 </div>
+                <div class="card-footer text-muted">
+                    投稿日:{{ $post->created_at }}
+                </div>
+                @endforeach
+
+@isset($category_id)
+    {{ $posts->appends(['category_id' => $category_id])->links() }}
+@endisset
+
+            </div>
         </div>
     </div>
 </div>

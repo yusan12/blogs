@@ -11,11 +11,30 @@ use JD\Cloudder\Facades\Cloudder;
 
 class PostController extends Controller
 {
-    public function index(){
-
+    public function index()
+    {
         $posts = Post::all();
+        $q = \Request::query();
 
-        return view('posts.index', compact('posts'));
+        if(isset($q['category_id'])){
+            $posts = POST::latest()->where('category_id', $q['category_id'])->paginate(5);
+            // $posts->load('category', 'user');
+            $posts->load('user');
+
+            return view('posts.index', [
+                'posts' => $posts,
+                'category_id' => $q['category_id']
+            ]);
+
+        } else {
+            $posts = Post::latest()->paginate(5);
+            // $posts->load('category', 'user');
+            $posts->load('user');
+
+            return view('posts.index', [
+                'posts' => $posts,
+            ]);
+        }
     }
 
     public function create(){
@@ -110,7 +129,12 @@ class PostController extends Controller
         $posts = Post::where('title', 'like', "%{$request->search}%")
                 ->orWhere('body', 'like', "%{$request->search}%")
                 ->paginate(5);
+        
+        $search_result = $request->search.'の検索結果'.count($posts).'件';
 
-                return view('posts.index', compact('posts'));
+        return view('posts.index', [
+            'posts' => $posts,
+            'search_result' => $search_result
+        ]);
     }
 }
