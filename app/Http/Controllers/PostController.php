@@ -17,7 +17,7 @@ class PostController extends Controller
         $q = \Request::query();
 
         if(isset($q['category_id'])){
-            $posts = POST::latest()->where('category_id', $q['category_id'])->paginate(5);
+            $posts = Post::latest()->where('category_id', $q['category_id'])->paginate(5);
             // $posts->load('category', 'user');
             $posts->load('user');
 
@@ -129,8 +129,10 @@ class PostController extends Controller
         $posts = Post::where('title', 'like', "%{$request->search}%")
                 ->orWhere('body', 'like', "%{$request->search}%")
                 ->paginate(5);
+
+
         
-        $search_result = $request->search.'の検索結果'.count($posts).'件';
+        $search_result = $request->search.'の検索結果'.$posts->total().'件';
 
         return view('posts.index', [
             'posts' => $posts,

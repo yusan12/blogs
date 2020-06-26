@@ -67,9 +67,13 @@
                 </div>
                 @endforeach
 
-@isset($category_id)
+@if(isset($category_id))
     {{ $posts->appends(['category_id' => $category_id])->links() }}
-@endisset
+@else
+    {{ $posts->links() }}
+@endif
+
+
 
             </div>
         </div>
