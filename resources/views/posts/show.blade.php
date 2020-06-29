@@ -11,10 +11,10 @@
                     Blogs
                   </div>
                   <div class="card-body">
-                    <h5 class="card-title">タイトル:{{ $post['title'] }}</h5>
-                    <p class="card-text">内容:{{ $post['body'] }}</p>
-                    <img src="{{ $post['image_path'] }}" alt="画像">
-                    @if( $post['user_id'] === Auth::id() )
+                    <h5 class="card-title">タイトル:{{ $post->title }}</h5>
+                    <p class="card-text">内容:{{ $post->body }}</p>
+                    <img src="{{ $post->image_path }}" alt="画像">
+                    @if( $post->user_id === Auth::id() )
                     <a href="{{route('posts.edit', $post->id) }}" class="btn btn-primary">編集画面へ</a>
                     <form action='{{ route('posts.destroy', $post->id) }}' method='post'>
                         {{ csrf_field() }}
@@ -24,7 +24,7 @@
                     @endif
                   </div>
                   <div class="card-footer text-muted">
-                    投稿日:{{ $post['created_at'] }} 
+                    投稿日:{{ $post->created_at }} 
                   </div>
                 </div>
         </div>
@@ -32,7 +32,7 @@
         <div class="col-md-8">
             <form action="{{ route('comments.store') }}" method="POST">
                 {{csrf_field()}}
-                <input type="hidden" name="post_id" value="{{ $post['id'] }}">
+                <input type="hidden" name="post_id" value="{{ $post->id }}">
                 <div class="form-group">
                     <label>コメント</label>
                     <textarea class="form-control" placeholder="内容" rows="5" name="body"></textarea>
