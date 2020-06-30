@@ -64,7 +64,7 @@ class PostController extends Controller
             Cloudder::upload($image_path, null);
             //直前にアップロードされた画像のpublicIdを取得する。
             $publicId = Cloudder::getPublicId();
-            $logoUrl = Cloudder::show($publicId, [
+            $logoUrl = Cloudder::secureShow($publicId, [
                 'width'     => 200,
                 'height'    => 200
             ]);
