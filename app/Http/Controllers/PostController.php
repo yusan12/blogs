@@ -14,6 +14,7 @@ class PostController extends Controller
     public function index()
     {
         $posts = Post::all();
+        
         $q = \Request::query();
 
         if(isset($q['category_id'])){
