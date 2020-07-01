@@ -21,4 +21,9 @@ class Post extends Model
         return $this->belongsToMany('App\User')->withTimestamps();
     }
 
+    public function category(){
+        //投稿は一つのカテゴリーに属する
+        return $this->belongsTo(\App\Category::class, 'category_id');
+    }
+
 }
