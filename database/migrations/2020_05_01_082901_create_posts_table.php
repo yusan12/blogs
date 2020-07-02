@@ -15,12 +15,15 @@ class CreatePostsTable extends Migration
     {
         Schema::create('posts', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('user_id'); //外部キー (他のテーブルのIDを参照している。)
-            $table->string('title');
-            $table->text('body');
-            $table->timestamps();
 
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->unsignedBigInteger('user_id'); //外部キー (他のテーブルのIDを参照している。)
+            $table->unsignedBigInteger('category_id'); //外部キー
+            $table->string('title')->nullable();
+            $table->text('body')->nullable();
+            
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('category_id')->references('id')->on('categories');
+            $table->timestamps();
         });
     }
 
