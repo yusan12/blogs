@@ -21,10 +21,10 @@ Auth::routes();
 Route::get('/', 'PostController@index')->name('posts.index');
 
 
-// Route::resource('posts', 'PostController');
-Route::resource('/posts', 'PostController')->except([
-    'index'
-]);
+Route::resource('posts', 'PostController');
+// Route::resource('/posts', 'PostController')->except([
+//     'index'
+// ]);
 Route::resource('comments', 'CommentController');
 
 Route::post('posts/{post}/favorites', 'FavoriteController@store')->name('favorites');
@@ -33,4 +33,4 @@ Route::post('posts/{post}/unfavorites', 'FavoriteController@destroy')->name('unf
 Route::get('login/twitter', 'Auth\LoginController@redirectToProvider')->name('login.twitter');
 Route::get('login/twitter/callback', 'Auth\LoginController@handleProviderCallback');
 
-Route::POST('/posts/search', 'PostController@search')->name('posts.search');
+Route::get('/posts/search', 'PostController@search')->name('posts.search');
