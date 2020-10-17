@@ -12,7 +12,7 @@
                   </div>
                   <div class="card-body">
                     <h5 class="card-title">タイトル:{{ $post->title }}</h5>
-                    <p class="card-text">内容:{{ $post->body }}</p>
+                    <p class="card-text">内容：{!! $body !!}</p>
                     <img src="{{ $post->image_path }}" alt="画像">
                     @if( $post->user_id === Auth::id() )
                     <a href="{{route('posts.edit', $post->id) }}" class="btn btn-primary">編集画面へ</a>
