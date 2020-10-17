@@ -11,32 +11,11 @@ use JD\Cloudder\Facades\Cloudder;
 
 class PostController extends Controller
 {
-    public function index()
-    {
+    public function index(){
+
         $posts = Post::all();
-        $posts->load('category');
-        
-        $q = \Request::query();
 
-        if(isset($q['category_id'])){
-            $posts = Post::latest()->where('category_id', $q['category_id'])->paginate(5);
-            // $posts->load('category', 'user');
-            $posts->load('user');
-
-            return view('posts.index', [
-                'posts' => $posts,
-                'category_id' => $q['category_id']
-            ]);
-
-        } else {
-            $posts = Post::latest()->paginate(5);
-            // $posts->load('category', 'user');
-            $posts->load('user');
-
-            return view('posts.index', [
-                'posts' => $posts,
-            ]);
-        }
+        return view('posts.index', compact('posts'));
     }
 
     public function create(){
@@ -48,8 +27,9 @@ class PostController extends Controller
         $post = Post::find($id);
 
         $comments = Comment::where('post_id', $id)->get();
+        $body = $post->replaceUrl($post->body);
 
-        return view ('posts.show', compact('post', 'comments'));
+        return view('posts.show', compact('post', 'body', 'comments'));
     }
 
     public function store(PostRequest $request){
@@ -66,7 +46,7 @@ class PostController extends Controller
             Cloudder::upload($image_path, null);
             //直前にアップロードされた画像のpublicIdを取得する。
             $publicId = Cloudder::getPublicId();
-            $logoUrl = Cloudder::secureShow($publicId, [
+            $logoUrl = Cloudder::show($publicId, [
                 'width'     => 200,
                 'height'    => 200
             ]);
@@ -123,22 +103,5 @@ class PostController extends Controller
         $post->delete();
 
         return redirect()->route('posts.index');
-    }
-
-    public function search(Request $request)
-    {
-        
-        $posts = Post::where('title', 'like', "%{$request->search}%")
-                ->orWhere('body', 'like', "%{$request->search}%")
-                ->paginate(5);
-
-
-        
-        $search_result = $request->search.'の検索結果'.$posts->total().'件';
-
-        return view('posts.index', [
-            'posts' => $posts,
-            'search_result' => $search_result
-        ]);
     }
 }
