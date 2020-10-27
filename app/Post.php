@@ -3,9 +3,11 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Webpatser\Uuid\Uuid;
 
 class Post extends Model
 {
+    public $incrementing = false;
     protected $fillable = ['title', 'body'];
 
     public function comments(){
@@ -43,4 +45,12 @@ class Post extends Model
         //配列にしたpostを文字列にする
     }
 
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($model) {
+            $model->{$model->getKeyName()} = Uuid::generate()->string;
+        });
+    }
 }

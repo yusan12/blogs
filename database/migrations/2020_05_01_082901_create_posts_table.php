@@ -14,7 +14,7 @@ class CreatePostsTable extends Migration
     public function up()
     {
         Schema::create('posts', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->string('id', 36)->primary();
             $table->unsignedBigInteger('user_id'); //外部キー (他のテーブルのIDを参照している。)
             $table->string('title');
             $table->text('body');
