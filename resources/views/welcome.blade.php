@@ -81,7 +81,7 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    掲示板
+                    掲示板（習作）
                 </div>
 
                 <div class="links">

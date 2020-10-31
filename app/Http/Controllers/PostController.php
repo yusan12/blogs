@@ -27,9 +27,8 @@ class PostController extends Controller
         $post = Post::find($id);
 
         $comments = Comment::where('post_id', $id)->get();
-        $body = $post->replaceUrl($post->body);
 
-        return view('posts.show', compact('post', 'body', 'comments'));
+        return view ('posts.show', compact('post', 'comments'));
     }
 
     public function store(PostRequest $request){
